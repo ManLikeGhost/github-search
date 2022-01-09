@@ -1,29 +1,39 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 export class Filter extends Component {
 	state = {
 		text: '',
 	};
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+	static propTypes = {
+		filterUsers: PropTypes.func.isRequired,
+		clearFilteredUsers: PropTypes.func.isRequired,
+		setAlert: PropTypes.func.isRequired,
+	};
 
-  onSubmit = ( e ) => {
-    e.preventDefault();
-    this.props.filterUsers( this.state.text );
-    this.setState({ text: '' })
-  }
+	onChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value });
+	};
+
+	onSubmit = (e) => {
+		e.preventDefault();
+		if (this.state.text === '') {
+			this.props.setAlert('Insert text in the search bar', 'light');
+		} else {
+			this.props.filterUsers(this.state.text);
+			this.setState({ text: '' });
+		}
+	};
 	render() {
 		return (
 			<div>
-        <form onSubmit={this.onSubmit} action='' className='form'>
+				<form onSubmit={this.onSubmit} action='' className='form'>
 					<input
 						name='text'
 						type='text'
 						placeholder='Search Github Users.....'
-            value={this.state.text}
-            onChange={this.onChange}
+						value={this.state.text}
+						onChange={this.onChange}
 					/>
 					<input
 						type='submit'
@@ -31,6 +41,12 @@ export class Filter extends Component {
 						className='btn btn-dark btn-block'
 					/>
 				</form>
+				<button
+					className='btn btn-light btn-block'
+					onClick={this.props.clearFilteredUsers}
+				>
+					Clear
+				</button>
 			</div>
 		);
 	}
