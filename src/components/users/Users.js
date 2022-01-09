@@ -19,7 +19,7 @@ const Users = ({ loading, users }) => {
 
 Users.propTypes = {
   loading: PropTypes.bool.isRequired,
-  user: PropTypes.array.isRequired
+  users: PropTypes.array.isRequired
 }
 
 const userStyle = {
