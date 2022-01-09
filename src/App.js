@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import NavBar from './components/layout/NavBar';
 import Users from './components/users/Users';
+import Filter from './components/users/Filter'
 import axios from 'axios';
 
 class App extends Component {
@@ -20,11 +21,20 @@ class App extends Component {
 		this.setState({ users: res.data, loading: false });
 	}
 
+	filterUsers = async (text) => {
+		const res = await axios.get(
+			`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+		);
+
+		this.setState({ users: res.data.items, loading: false });
+	}
+
 	render() {
 		return (
 			<div className='App'>
 				<NavBar />
 				<div className='container'>
+					<Filter filterUsers={this.filterUsers} />
 					<Users loading={this.state.loading} users={this.state.users} />
 				</div>
 			</div>
