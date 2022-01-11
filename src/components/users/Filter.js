@@ -1,55 +1,51 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-export class Filter extends Component {
-	state = {
-		text: '',
-	};
+const Filter = ({ filterUsers, clearFilteredUsers, setAlert }) => {
+	const [text, setText] = useState('')
 
-	static propTypes = {
-		filterUsers: PropTypes.func.isRequired,
-		clearFilteredUsers: PropTypes.func.isRequired,
-		setAlert: PropTypes.func.isRequired,
-	};
-
-	onChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-	};
-
-	onSubmit = (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault();
-		if (this.state.text === '') {
-			this.props.setAlert('Insert text in the search bar', 'light');
+		if (text === '') {
+			setAlert('Insert text in the search bar', 'light');
 		} else {
-			this.props.filterUsers(this.state.text);
-			this.setState({ text: '' });
+			filterUsers(text);
+			setText('');
 		}
 	};
-	render() {
-		return (
-			<div>
-				<form onSubmit={this.onSubmit} action='' className='form'>
-					<input
-						name='text'
-						type='text'
-						placeholder='Search Github Users.....'
-						value={this.state.text}
-						onChange={this.onChange}
-					/>
-					<input
-						type='submit'
-						value='Search'
-						className='btn btn-dark btn-block'
-					/>
-				</form>
-				<button
-					className='btn btn-light btn-block'
-					onClick={this.props.clearFilteredUsers}
-				>
-					Clear
-				</button>
-			</div>
-		);
-	}
-}
+
+	const onChange = (e) => {
+		setText(e.target.value);
+	};
+	return (
+		<div>
+			<form onSubmit={onSubmit} action='' className='form'>
+				<input
+					name='text'
+					type='text'
+					placeholder='Search Github Users.....'
+					value={text}
+					onChange={onChange}
+				/>
+				<input
+					type='submit'
+					value='Search'
+					className='btn btn-dark btn-block'
+				/>
+			</form>
+			<button
+				className='btn btn-light btn-block'
+				onClick={clearFilteredUsers}
+			>
+				Clear
+			</button>
+		</div>
+	);
+};
+
+Filter.propTypes = {
+	filterUsers: PropTypes.func.isRequired,
+	clearFilteredUsers: PropTypes.func.isRequired,
+	setAlert: PropTypes.func.isRequired,
+};
 
 export default Filter;
