@@ -58,12 +58,8 @@ const App = () => {
 		setLoading(false)
 	};
 
-	const setAlert = (msg, type) => {
-		setAlert({
-			msg,
-			type,
-		})
-		
+	const showAlert = (msg, type) => {
+		setAlert({ msg, type })
 		setTimeout(() => setAlert(null), 5000);
 	};
 
@@ -91,7 +87,7 @@ const App = () => {
 									<Filter
 										filterUsers={filterUsers}
 										clearFilteredUsers={clearFilteredUsers}
-										setAlert={setAlert}
+										setAlert={showAlert}
 									/>
 									<Users
 										loading={loading}
