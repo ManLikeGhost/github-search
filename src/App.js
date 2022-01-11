@@ -3,13 +3,15 @@ import { BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
 import NavBar from './components/layout/NavBar';
 import Users from './components/users/Users';
 import Filter from './components/users/Filter';
-import axios from 'axios';
+import User from './components/users/User'
 import Alert from './components/layout/Alert';
-import About from './components/pages/About'
+import About from './components/pages/About';
+import axios from 'axios';
 import './App.css';
 class App extends Component {
 	state = {
 		users: [],
+		user: {},
 		loading: false,
 		alert: null,
 	};
@@ -32,6 +34,16 @@ class App extends Component {
 		);
 
 		this.setState({ users: res.data.items, loading: false });
+	};
+
+	getSingleUser = async ( login ) => {
+		this.setState({ loading: true });
+
+		const res = await axios.get(
+			`https://api.github.com/users/${login}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+		);
+
+		this.setState({ user: res.data, loading: false });
 	};
 
 	clearFilteredUsers = () => {
@@ -73,7 +85,13 @@ class App extends Component {
 									</Fragment>
 								)}
 							/>
-							<Route exact path='/about' component={About}/>
+							<Route exact path='/about' component={About} />
+							<Route
+								exact
+								path='/user/:login'
+								render={props => (
+									<User {...props} getSingleUser={this.getSingleUser} user={this.state.user} loading={this.state.loading}/>
+								)}/>
 						</Switch>
 					</div>
 				</div>
