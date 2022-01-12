@@ -11,8 +11,6 @@ import axios from 'axios';
 import './App.css';
 
 const App = () => {
-	const [users, setUsers] = useState([]);
-
 	const [user, setUser] = useState({});
 
 	const [repos, setRepos] = useState([]);
@@ -22,16 +20,6 @@ const App = () => {
 	const [alert, setAlert] = useState(null);
 
 	
-	const getSingleUser = async (login) => {
-		setLoading(true);
-
-		const res = await axios.get(
-			`https://api.github.com/users/${login}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-		);
-
-		setUser(res.data);
-		setLoading(false);
-	};
 
 	const getUserRepos = async (login) => {
 		setLoading(true);
@@ -44,11 +32,7 @@ const App = () => {
 		setLoading(false);
 	};
 
-	const clearFilteredUsers = () => {
-		setUsers([]);
-		setLoading(false);
-	};
-
+	
 	const showAlert = (msg, type) => {
 		setAlert({ msg, type });
 		setTimeout(() => setAlert(null), 5000);
@@ -77,7 +61,6 @@ const App = () => {
 								render={(props) => (
 									<Fragment>
 										<Filter
-											clearFilteredUsers={clearFilteredUsers}
 											setAlert={showAlert}
 										/>
 										<Users />
