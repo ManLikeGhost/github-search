@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import GithubContext from '../../context/github/githubContext'
 
-const Filter = ({ clearFilteredUsers, setAlert }) => {
+const Filter = ({ setAlert }) => {
 	const githubContext = useContext(GithubContext);
 
 	
@@ -39,7 +39,7 @@ const Filter = ({ clearFilteredUsers, setAlert }) => {
 			</form>
 			<button
 				className='btn btn-light btn-block'
-				onClick={clearFilteredUsers}
+				onClick={githubContext.clearFilteredUsers}
 			>
 				Clear
 			</button>
@@ -48,7 +48,6 @@ const Filter = ({ clearFilteredUsers, setAlert }) => {
 };
 
 Filter.propTypes = {
-	clearFilteredUsers: PropTypes.func.isRequired,
 	setAlert: PropTypes.func.isRequired,
 };
 
