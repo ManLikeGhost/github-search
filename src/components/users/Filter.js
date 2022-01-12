@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-const Filter = ({ filterUsers, clearFilteredUsers, setAlert }) => {
-	const [text, setText] = useState('')
+import GithubContext from '../../context/github/githubContext'
+
+const Filter = ({ clearFilteredUsers, setAlert }) => {
+	const githubContext = useContext(GithubContext);
+
+	
+	const [ text, setText ] = useState( '' )
 
 	const onSubmit = (e) => {
 		e.preventDefault();
 		if (text === '') {
 			setAlert('Insert text in the search bar', 'light');
 		} else {
-			filterUsers(text);
+			githubContext.filterUsers(text);
 			setText('');
 		}
 	};
@@ -43,7 +48,6 @@ const Filter = ({ filterUsers, clearFilteredUsers, setAlert }) => {
 };
 
 Filter.propTypes = {
-	filterUsers: PropTypes.func.isRequired,
 	clearFilteredUsers: PropTypes.func.isRequired,
 	setAlert: PropTypes.func.isRequired,
 };
