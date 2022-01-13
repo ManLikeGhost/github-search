@@ -11,15 +11,11 @@ import axios from 'axios';
 import './App.css';
 
 const App = () => {
-	const [user, setUser] = useState({});
-
 	const [repos, setRepos] = useState([]);
 
 	const [loading, setLoading] = useState(false);
 
 	const [alert, setAlert] = useState(null);
-
-	
 
 	const getUserRepos = async (login) => {
 		setLoading(true);
@@ -32,7 +28,6 @@ const App = () => {
 		setLoading(false);
 	};
 
-	
 	const showAlert = (msg, type) => {
 		setAlert({ msg, type });
 		setTimeout(() => setAlert(null), 5000);
@@ -60,9 +55,7 @@ const App = () => {
 								path='/'
 								render={(props) => (
 									<Fragment>
-										<Filter
-											setAlert={showAlert}
-										/>
+										<Filter setAlert={showAlert} />
 										<Users />
 									</Fragment>
 								)}
@@ -74,10 +67,8 @@ const App = () => {
 								render={(props) => (
 									<User
 										{...props}
-										getSingleUser={getSingleUser}
 										getUserRepos={getUserRepos}
 										repos={repos}
-										user={user}
 										loading={loading}
 									/>
 								)}
