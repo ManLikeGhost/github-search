@@ -15,18 +15,25 @@ export default (state, action) => {
 				users: action.payload,
 				loading: false,
 			};
-			
+
 		case GET_SINGLE_USER:
-      return {
-        ...state,
-        user: action.payload,
-        loading: false
-      };
-			
+			return {
+				...state,
+				user: action.payload,
+				loading: false,
+			};
+
 		case CLEAR_FILTERED_USERS:
 			return {
 				...state,
 				users: [],
+				loading: false,
+			};
+
+		case GET_USER_REPOS:
+			return {
+				...state,
+				repos: action.payload,
 				loading: false,
 			};
 		case SET_LOADING:
