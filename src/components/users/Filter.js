@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import GithubContext from '../../context/github/githubContext'
-
-const Filter = ({ setAlert }) => {
-	const githubContext = useContext(GithubContext);
+import AlertContex from '../../context/alert/alertContext'
+const Filter = () => {
+	const githubContext = useContext( GithubContext );
+	
+	const alertContext = useContext(AlertContex)
 
 	
 	const [ text, setText ] = useState( '' )
@@ -11,7 +12,7 @@ const Filter = ({ setAlert }) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		if (text === '') {
-			setAlert('Insert text in the search bar', 'light');
+			alertContext.setAlert('Insert text in the search bar', 'light');
 		} else {
 			githubContext.filterUsers(text);
 			setText('');
@@ -47,8 +48,6 @@ const Filter = ({ setAlert }) => {
 	);
 };
 
-Filter.propTypes = {
-	setAlert: PropTypes.func.isRequired,
-};
+
 
 export default Filter;
